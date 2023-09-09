@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class AntiFraudService {
+public class TransactionService {
 
     private final static String INFO_NONE = "none";
     private final static String INFO_AMOUNT = "amount";
@@ -39,8 +39,8 @@ public class AntiFraudService {
     private final DetectionLimitRepository detectionLimitRepository;
 
     @Autowired
-    public AntiFraudService(UserDetailRepository userDetailRepository, SuspiciousIpRepository suspiciousIpRepository,
-                            StolenCardRepository stolenCardRepository, TransactionRepository transactionRepository, DetectionLimitRepository detectionLimitRepository) {
+    public TransactionService(UserDetailRepository userDetailRepository, SuspiciousIpRepository suspiciousIpRepository,
+                              StolenCardRepository stolenCardRepository, TransactionRepository transactionRepository, DetectionLimitRepository detectionLimitRepository) {
         this.userDetailRepository = userDetailRepository;
         this.suspiciousIpRepository = suspiciousIpRepository;
         this.stolenCardRepository = stolenCardRepository;

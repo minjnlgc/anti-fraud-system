@@ -7,7 +7,7 @@ import antifraud.response.TransactionResponse;
 import antifraud.model.entity.SuspiciousIp;
 import antifraud.model.entity.StolenCard;
 import antifraud.model.entity.Transaction;
-import antifraud.service.AntiFraudService;
+import antifraud.service.TransactionService;
 import antifraud.service.StolenCardService;
 import antifraud.service.SuspiciousIpService;
 import antifraud.validator.CardNumber;
@@ -24,35 +24,35 @@ import java.util.List;
 @RequestMapping("/api/antifraud")
 public class AntiFraudController {
 
-    private final AntiFraudService antiFraudService;
+    private final TransactionService transactionService;
     private final SuspiciousIpService suspiciousIpService;
     private final StolenCardService stolenCardService;
 
     @Autowired
-    public AntiFraudController(AntiFraudService antiFraudService, SuspiciousIpService suspiciousIpService, StolenCardService stolenCardService) {
-        this.antiFraudService = antiFraudService;
+    public AntiFraudController(TransactionService transactionService, SuspiciousIpService suspiciousIpService, StolenCardService stolenCardService) {
+        this.transactionService = transactionService;
         this.suspiciousIpService = suspiciousIpService;
         this.stolenCardService = stolenCardService;
     }
 
     @PostMapping("/transaction")
     public TransactionResponse transaction(@Valid @RequestBody TransactionDto request) {
-        return antiFraudService.transaction(request);
+        return transactionService.transaction(request);
     }
 
     @PutMapping("/transaction")
     public Transaction putTransactionFeedback(@Valid @RequestBody TransactionFeedbackRequest transactionFeedbackRequest) {
-        return antiFraudService.putTransactionFeedback(transactionFeedbackRequest);
+        return transactionService.putTransactionFeedback(transactionFeedbackRequest);
     }
 
     @GetMapping("/history")
     public List<TransactionDto> getTransactionHistory() {
-        return antiFraudService.findTransactionHistory();
+        return transactionService.findTransactionHistory();
     }
 
     @GetMapping("/history/{number}")
     public List<TransactionDto> getTransactionHistoryByNumber(@CardNumber @PathVariable String number) {
-        return antiFraudService.findTransactionHistoryByNumber(number);
+        return transactionService.findTransactionHistoryByNumber(number);
     }
 
     @PostMapping("/suspicious-ip")
